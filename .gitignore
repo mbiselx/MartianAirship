@@ -1,0 +1,19 @@
+# Matlab BS
+*.asv
+
+# Google Drive BS
+*\desktop.ini
+
+# Reports/papers/etc
+*.gdoc
+*.doc
+*.docx
+*.pdf
+
+# Plots
+*.png
+*.jpg
+*.gif
+
+# Datasets
+*\data\*
