@@ -1,8 +1,10 @@
 # Matlab BS
 *.asv
+# Geogebra BS
+*.ggb
 
 # Google Drive BS
-*\desktop.ini
+*/desktop.ini
 
 # Reports/papers/etc
 *.gdoc
@@ -16,4 +18,4 @@
 *.gif
 
 # Datasets
-*\data\*
+*\MCDonline_LS0_day\
