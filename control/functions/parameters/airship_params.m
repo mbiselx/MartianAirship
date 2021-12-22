@@ -12,6 +12,7 @@ z0      = -3000;            % [m]
 
 
 %% balloon
+SPF     = 1.5;              % super-pressure factor
 
 r_b     = 23;               % [m]
 m_env   = 300 + 13;         % [kg]
@@ -19,8 +20,8 @@ m_g     = 39;               % [kg]
 m_b     = m_env + m_g;      % [kg]  % balloon mass
 I_b     = 2*(m_env/3 + m_g/5)*r_b^2;% [kg m^2]
 
-m_a     = 2/3*pi*r_b^3 * rho_atm(); % [kg]  % nominal added mass
-I_a     = 0;                % [kg m^2] added inertia (is 0 for a sphere ?)
+% m_a     = 2/3*pi*r_b^3 * rho_atm(); % [kg]  % nominal added mass
+% I_a     = 0;                % [kg m^2] added inertia (is 0 for a sphere ?)
 
 
 %% ballonnet 

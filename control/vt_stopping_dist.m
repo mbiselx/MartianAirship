@@ -13,6 +13,7 @@ airship_params
 
 v_air       = [0; 0; 0];       % [m/s]
 
+SPF         = 1.5;
 T_vent      = 60^2;
 T_sim       = 5000;
 dt          = .1;
@@ -22,7 +23,7 @@ integrate   = @(x, i) (.5*(x(:,i) + x(:,i-1))*dt);
 
 lh = [];
 ll = {};
-h = -1000:-1000:-4000;
+h = -1000:-2000:-5000;
 
 for i  = 1:length(h)
 
@@ -38,7 +39,7 @@ for i  = 1:length(h)
     peq(:,1) = [0; 0; -h(i)];
     v(:,1)   = v_air;
 
-    m_bb0    = 4/3*pi*r_bb^3*rho_atm(h(i));
+    m_bb0    = 4/3*pi*r_bb^3*rho_atm(h(i)) * SPF;
     FG(:,1)  =  Fg(m+m_bb0);
     Fa(:,1)  = -Fg(m+m_bb0);
     fa       =  Fa(:,1)/rho_atm(h(i));
@@ -73,7 +74,7 @@ for i  = 1:length(h)
     subplot(3,1,1)
 %         plot(t, -a(3,:)), hold on
 %         xlabel("time [s]"), ylabel("acceleration [m / s^2]")
-        plot(t, FG(3,:), "Color", C(i,:)), hold on
+        plot(t, FG(3,:), '--', "Color", C(i,:)), hold on
         plot(t, -Fa(3,:),"Color", C(i,:)), hold on
         xlabel("time [s]"), ylabel("Force [N]")
         grid on
@@ -86,7 +87,7 @@ for i  = 1:length(h)
     subplot(3,1,3)
         lh = [lh, plot(t, -p(3,:)-h(i), "Color", C(i,:))]; hold on
         ll = [ll, {sprintf("%d m", h(i))}];
-        xlabel("time [s]"), ylabel("elevation [m]")
+        xlabel("time [s]"), ylabel("\Deltah [m]")
         grid on
         axis tight
 
@@ -102,7 +103,8 @@ for i  = 1:length(h)
     figure(3)
     plot3(t, -p(3,:)  -h(i), rho_atm(h(i)) - rho_atm(-p(3,:)),   '-',  "Color", C(i,:) ), hold on
     plot3(t, -peq(3,:)-h(i), rho_atm(h(i)) - rho_atm(-peq(3,:)), '--', "Color", C(i,:) ), hold on
-    xlabel("time of flight"), ylabel("elevation [m]"), zlabel("\rho_{atm}")
+    xlabel("time of flight [s]"), ylabel("\Deltah [m]"), zlabel("\Delta\rho_{atm} [Pa]")
+    grid on
 
 end
 

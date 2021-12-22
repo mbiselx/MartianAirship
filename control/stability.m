@@ -13,19 +13,20 @@ if length(dbstack) <= 1
 
 airship_params
 
-v_air   = [0; 0; 0];               % [m/s]
-        
-T0      = 0;                        % [N] % nominal total propulsion 
+v_air   = [10; 0; 0];               % [m/s]
+
+p0      = [0;0;3000];               % [m] initial position
+T0      = 200;                        % [N] % nominal total propulsion 
 D       = 4;                        % [m] % propeller diameter
 nb_prop = 4;        
-P0      = 8e3;                    % [W] % nominal total power
+P0      = 3.5e3;                      % [W] % nominal total power
 % P0      = 0;                        % [W] % nominal total power
 
 theta0 = 0;
 
 end
 
-
+% propulsionForce('init', T0, 10, D, nb_prop, p0);
 propulsionForce('init', P0, D, nb_prop);
         
 Fa      = -Fg(m);                   % [N] lift in the ground frame
@@ -62,8 +63,7 @@ integrate   = @(x, i) (.5*(x(:,i) + x(:,i-1))*dt);  % trapezoidal integration
 %% simulation loop
 
 
-p(:,1) = [0;0;3000];
-% propulsionForce('init', T0, 10, D, nb_prop, p(:,1));
+p(:,1) = p0;
 F      = dragForce(v_air-zeros(3,1), p(:,1)) ...
          - RotMat(theta(1), 2) * propulsionForce('get', v_air - v(:,1));
 a(:,1) = F/(m+addedMass(p(:,1)));
@@ -87,7 +87,7 @@ for i = 2:length(t)
     p(:,i)      = p(:,i-1) + integrate(v, i);
 
     % angular dynamics
-    alpha(i)    = (M_b(2) + M_n(2))/I;              % HACK: we only look at the 
+    alpha(i)    = (M_b(2) + M_n(2))/I;              % HACK: we only look at the in-plane rotations
     omega(i)    = omega(i-1) + integrate(alpha, i);
     theta(i)    = theta(i-1) + integrate(omega, i);
 

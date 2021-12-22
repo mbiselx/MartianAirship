@@ -32,11 +32,12 @@ integrate   = @(x_in, x) (.5*(x_in + x)*dt);  % trapezoidal integration
 
 
 %% set up the system
-dt = .001;
+dt   = .001;
 a_in = 0;
 alpha_in = zeros(1,4);
 p_in = [0; 0; 3000];
 v_in = zeros(3,1);
+m_a  = addedMass(p_in);
 
 % propulsionForce('init', T0, 10, D, nb_prop, p_in);
 
@@ -49,8 +50,8 @@ jrange = length(omega_in);
 
 [theta_in, omega_in] = meshgrid(theta_in, omega_in);
 
-theta_out = zeros(irange, jrange);
-omega_out = zeros(irange, jrange);    
+theta_out = zeros(size(theta_in));
+omega_out = zeros(size(omega_in));    
 for i = 1:irange
     for j = 1:jrange
 
@@ -58,7 +59,7 @@ for i = 1:irange
 
     %dynamics 
     % CoM dynamics
-    a      = F(1)/(m+m_a);
+    a      = F(1)/(m + m_a);
     v      = v_in + integrate(a_in, a);
     p      = p_in + integrate(v_in, v);
     
