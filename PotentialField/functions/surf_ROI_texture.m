@@ -6,6 +6,16 @@ function surf_ROI_texture(Z, vis, mpp, lat, lon)
     [I, map]    = rgb2ind(vis,.1);
     warp(XX, YY, Z, I, map);
     
+    [xlo, xhi]  = bounds(XX, "all");
+    [ylo, yhi]  = bounds(YY, "all");
+    zlo         = min(Z, [], 'all');
+
+    patch([XX(  1,  :), xhi, xlo], [YY(  1,  :), ylo, ylo], [Z(  1,  :), zlo, zlo], [0 0 0])
+    patch([XX(end,  :), xhi, xlo], [YY(end,  :), yhi, yhi], [Z(end,  :), zlo, zlo], [0 0 0])
+    patch([XX(  :,  1); xlo; xlo], [YY(  :,  1); yhi; ylo], [Z(  :,  1); zlo; zlo], [0 0 0])
+    patch([XX(  :,end); xhi; xhi], [YY(  :,end); yhi; ylo], [Z(  :,end); zlo; zlo], [0 0 0])
+    patch([xlo, xlo, xhi, xhi], [ylo, yhi, yhi, ylo], [zlo, zlo, zlo, zlo], [0 0 0])
+    
     yf = scalefactor(lat);
     y_tix_sp = yf*Y/range(lat);        % [px/°]
     yticks(mpp*(0:y_tix_sp:Y));
