@@ -21,8 +21,8 @@ mpp = 463;  % resolution is 463 meters per pixel
 % roi_lon = [-73, -56]; % [-80, -56]
 roi_lat = [-15, -11]; 
 roi_lon = [-59, -67]; 
-% roi_lat = [-14, -12]; 
-% roi_lon = [-62, -64]; 
+roi_lat = [-14, -12]; 
+roi_lon = [-62, -64]; 
 % roi_lat = [-13, -12]; 
 % roi_lon = [-61.5, -63]; 
 % roi_lat = [-13, -12]; 
@@ -71,11 +71,12 @@ if ~exist('texturemap', 'var') || isempty(texturemap)
     texturemap = imread("../data/mars45s315.png");
 end
 
-correction_val_lat = -.2;   % HACK
-correction_val_lon = .03;   % HACK
-lat_idx = round((-roi_lat-correction_val_lat)/90 * size(texturemap,1));
-lon_idx = round((90 + roi_lon + correction_val_lon)/90 * size(texturemap,2));
-vis = texturemap(min(lat_idx):max(lat_idx), min(lon_idx):max(lon_idx), :);
+correction_val_lat = -.22;   % HACK
+correction_val_lon =  .03;   % HACK
+vis = extract_local_ROI(texturemap, ...
+                      roi_lat + correction_val_lat, ...
+                      roi_lon + correction_val_lon, ...
+                      [-90 0], [-90 0]);
 disp("Texture extracted. Starting calculation")
 
 figure(4), clf
