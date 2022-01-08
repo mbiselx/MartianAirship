@@ -8,7 +8,7 @@ function surf_ROI_texture(Z, vis, mpp, lat, lon)
     
     [xlo, xhi]  = bounds(XX, "all");
     [ylo, yhi]  = bounds(YY, "all");
-    zlo         = min(Z, [], 'all');
+    zlo         = min(Z, [], 'all')-100;
 
     patch([XX(  1,  :), xhi, xlo], [YY(  1,  :), ylo, ylo], [Z(  1,  :), zlo, zlo], [0 0 0])
     patch([XX(end,  :), xhi, xlo], [YY(end,  :), yhi, yhi], [Z(end,  :), zlo, zlo], [0 0 0])

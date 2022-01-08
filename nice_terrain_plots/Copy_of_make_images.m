@@ -6,10 +6,8 @@ addpath("functions")
 
 
 %% define region of interest
-roi_lat = [-14, -12];
-roi_lon = [-62, -64];
-roi_lat = [-12.5, -9.5];
-roi_lon = [-71.5, -68.5];
+roi_lat = [-16, -3];
+roi_lon = [-86, -54];
 
 
 %% load z data
@@ -37,8 +35,21 @@ C = extract_local_ROI(texturemap, ...
                       roi_lon + correction_val_lon, ...
                       [-90 0], [-90 0]);
 
-%% plot terrain(requires image processing toolbox)
+%%
+rect_lat = [-13, - 8];
+rect_lon = [-80, -65];
 
-figure()
-surf_ROI_texture(Z, C, mpp, roi_lat, roi_lon)
-% axis off
+fig1 = figure(1);
+tiledlayout(2,1)
+nexttile
+    h1 = show_ROI(C, roi_lat, roi_lon);
+    r1 = annotate_ROI(C, roi_lat, roi_lon, rect_lat, rect_lon);
+nexttile
+    colormap('jet')
+    h2 = plot_ROI(double(Z), roi_lat, roi_lon);
+    r2 = annotate_ROI(Z, roi_lat, roi_lon, rect_lat, rect_lon);
+    c = colorbar('eastoutside');
+    c.Label.String = 'MOLA altitude [°]';
+
+
+

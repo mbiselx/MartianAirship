@@ -6,10 +6,12 @@ addpath("functions")
 
 
 %% define region of interest
-roi_lat = [-14, -12];
-roi_lon = [-62, -64];
-roi_lat = [-12.5, -9.5];
-roi_lon = [-71.5, -68.5];
+% roi_lat = [-14, -12];
+% roi_lon = [-62, -64];
+roi_lat = [-12, -13];
+roi_lon = [-63, -62];
+% roi_lat = [-12.5, -9.5];
+% roi_lon = [-71.5, -68.5];
 
 
 %% load z data
@@ -24,18 +26,18 @@ Z = extract_ROI(heightmap, roi_lat, roi_lon);
 
 %% load texture data
 
-if ~exist('texturemap', 'var') || isempty(texturemap)
+if ~exist('texturemap', 'var') || isempty(texturemap2)
     disp("loading texture map")
-    texturemap = imread("../data/mars45s315.png");
+    texturemap2 = imread("../data/016vallesmarineris.jpg");
 end
 
-correction_val_lat = -.22;   % HACK : to fix discrepancy
-correction_val_lon =  .03;   % HACK : needs to be hand-tuned for each ROI
+correction_val_lat = 0;%-.22;   % HACK : to fix discrepancy
+correction_val_lon = 0;% .03;   % HACK : needs to be hand-tuned for each ROI
 
-C = extract_local_ROI(texturemap, ...
+C = extract_local_ROI(texturemap2, ...
                       roi_lat + correction_val_lat, ...
                       roi_lon + correction_val_lon, ...
-                      [-90 0], [-90 0]);
+                      [-20 0], [-90 -50]);
 
 %% plot terrain(requires image processing toolbox)
 
