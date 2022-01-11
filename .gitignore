@@ -1,5 +1,7 @@
 # Matlab BS
 *.asv
+*.mat
+
 # Geogebra BS
 *.ggb
 
@@ -16,6 +18,3 @@
 *.png
 *.jpg
 *.gif
-
-# Datasets
-*\MCDonline_LS0_day\
